@@ -1,73 +1,99 @@
 using System.Collections.Concurrent;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.IO;
 using System.Threading.Tasks;
+using System.Linq;
+using System.Text;
 
 namespace Database_Testing_Console
 {
-    interface IFileDb
+    interface IFileDbCollection
     {
-        string Get(string collection, string key);
-        bool AddOrUpdate(string collection, string key, string value);
+        Task<string> GetAsync(string key);
+        Task<bool> AddOrUpdateAsync(string key, string value);
 
     }
 
-    class FileDb : IFileDb
+    class FileDbCollection : IFileDbCollection
     {
         private readonly string FilePath = "./";
         private readonly string DataFilePrefix = "Data_";
         private readonly string OffsetFilePrefix = "Offset_";
+        private readonly string CollectionName;
 
         private ConcurrentDictionary<string, FileOffset> Offsets;
 
-        public FileDb()
+        public FileDbCollection(string collectionName)
         {
+            CollectionName = collectionName;
             Offsets = new ConcurrentDictionary<string, FileOffset>();
         }
 
-        public async Task<bool> AddOrUpdateAsync(string collection, string key, string value)
+        public async Task<bool> AddOrUpdateAsync(string key, string value)
         {
-            string offsetFileName = GetOffsetFileName(collection, key);
-            string dataFileName = GetDataFileName(collection, key);
+            var offsetFileName = GetOffsetFileName(CollectionName, key);
+            var dataFileName = GetDataFileName(CollectionName, key);
 
-            await ReadOffsetFileAync(offsetFileName); 
+            await ReadOffsetFileAync(offsetFileName);
 
+            var entry = value;//JsonSerializer.Serialize(new Entry(key, value));
+            var length = entry.Length;
+            //var endOfFile = File.
 
+            using (FileStream fs = File.OpenWrite(dataFileName))
+            {
+                byte[] info = new UTF8Encoding(true).GetBytes(value);
+                await fs.WriteAsync(info, 0, length, new System.Threading.CancellationToken());
+
+                fs.Close();
+            }
 
             return true;
         }
 
-        public async Task<string> Get(string collection, string key)
+        public async Task<string> GetAsync(string key)
         {
-            string offsetFileName = GetOffsetFileName(collection, key);
-            string dataFileName = GetDataFileName(collection, key);
+            var offsetFileName = GetOffsetFileName(CollectionName, key);
+            var dataFileName = GetDataFileName(CollectionName, key);
 
             await ReadOffsetFileAync(offsetFileName);
 
             throw new System.NotImplementedException();
         }
 
-        private string GetDataFileName(string collection, string key) => FilePath + DataFilePrefix + collection.ToLower();
-        private string GetOffsetFileName(string collection, string key) => FilePath + OffsetFilePrefix + collection.ToLower();
+        private string GetDataFileName(string collection, string key) => FilePath + DataFilePrefix + collection.ToLower() + ".json";
+        private string GetOffsetFileName(string collection, string key) => FilePath + OffsetFilePrefix + collection.ToLower() + ".json";
 
+        //warning need to make this thread safe
         private async Task ReadOffsetFileAync(string filename)
         {
             if (Offsets.Count != 0) return;
-            
-            var fileContents = await File.ReadAllTextAsync(filename);
 
-            var offsetArray = JsonSerializer.Deserialize<FileOffset[]>(fileContents);
+            var fileContents = await File.ReadAllLinesAsync(filename);
 
-            foreach(var offset in offsetArray)            
+            var offsetArray = fileContents.Select(x => JsonSerializer.Deserialize<FileOffset>(x,
+                new JsonSerializerOptions() { PropertyNameCaseInsensitive = true })).ToArray();
+
+            foreach (var offset in offsetArray)
             {
-                Offsets.TryAdd(offset.Key, offset);
+                Offsets.AddOrUpdate(offset.Key, offset);
             }
         }
-
     }
 
-    struct FileOffset
+    public class Entry
+    {
+        public Entry(string key, string value)
+        {
+            Key = key;
+            Value = value;
+        }
+
+        string Key { get; }
+        string Value { get; }
+    }
+
+    public class FileOffset
     {
         public FileOffset(string key, long startOffset, long endOffset)
         {
@@ -76,7 +102,7 @@ namespace Database_Testing_Console
             EndOffset = endOffset;
         }
 
-        public string Key { get ;}
+        public string Key { get; }
         public long StartOffset { get; }
         public long EndOffset { get; }
     }

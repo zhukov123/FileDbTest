@@ -21,3 +21,12 @@ Database Testing Console/bin/Debug/net5.0/Database Testing Console.pdb
 Database Testing Console/bin/Debug/net5.0/Database Testing Console.runtimeconfig.dev.json
 Database Testing Console/bin/Debug/net5.0/Database Testing Console.runtimeconfig.json
 Database Testing Console/bin/Debug/net5.0/ref/Database Testing Console.dll
+.vscode/solution-explorer/class.cs-template
+.vscode/solution-explorer/class.ts-template
+.vscode/solution-explorer/class.vb-template
+.vscode/solution-explorer/default.ts-template
+.vscode/solution-explorer/enum.cs-template
+.vscode/solution-explorer/interface.cs-template
+.vscode/solution-explorer/interface.ts-template
+.vscode/solution-explorer/template-list.json
+.vscode/solution-explorer/template-parameters.js
