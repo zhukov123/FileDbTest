@@ -30,3 +30,26 @@ Database Testing Console/bin/Debug/net5.0/ref/Database Testing Console.dll
 .vscode/solution-explorer/interface.ts-template
 .vscode/solution-explorer/template-list.json
 .vscode/solution-explorer/template-parameters.js
+StorageEngine/obj/project.assets.json
+StorageEngine/obj/project.nuget.cache
+StorageEngine/obj/StorageEngine.csproj.nuget.dgspec.json
+StorageEngine/obj/StorageEngine.csproj.nuget.g.props
+StorageEngine/obj/StorageEngine.csproj.nuget.g.targets
+Database Testing Console/bin/Debug/net5.0/StorageEngine.dll
+Database Testing Console/bin/Debug/net5.0/StorageEngine.pdb
+Database Testing Console/obj/Debug/net5.0/Database Testing Console.csproj.CopyComplete
+StorageEngine/bin/Debug/net5.0/StorageEngine.deps.json
+StorageEngine/bin/Debug/net5.0/StorageEngine.dll
+StorageEngine/bin/Debug/net5.0/StorageEngine.pdb
+StorageEngine/bin/Debug/net5.0/ref/StorageEngine.dll
+StorageEngine/obj/Debug/net5.0/.NETCoreApp,Version=v5.0.AssemblyAttributes.cs
+StorageEngine/obj/Debug/net5.0/StorageEngine.AssemblyInfo.cs
+StorageEngine/obj/Debug/net5.0/StorageEngine.AssemblyInfoInputs.cache
+StorageEngine/obj/Debug/net5.0/StorageEngine.assets.cache
+StorageEngine/obj/Debug/net5.0/StorageEngine.csproj.CoreCompileInputs.cache
+StorageEngine/obj/Debug/net5.0/StorageEngine.csproj.FileListAbsolute.txt
+StorageEngine/obj/Debug/net5.0/StorageEngine.csprojAssemblyReference.cache
+StorageEngine/obj/Debug/net5.0/StorageEngine.dll
+StorageEngine/obj/Debug/net5.0/StorageEngine.GeneratedMSBuildEditorConfig.editorconfig
+StorageEngine/obj/Debug/net5.0/StorageEngine.pdb
+StorageEngine/obj/Debug/net5.0/ref/StorageEngine.dll

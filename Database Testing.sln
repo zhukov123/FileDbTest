@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database Testing Console", "Database Testing Console\Database Testing Console.csproj", "{EED7108C-E4A2-4E18-AB8C-7D2EF6497C1E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StorageEngine", "StorageEngine\StorageEngine.csproj", "{38DC265F-079A-49F6-BEAB-1FCE92AE8487}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,17 @@ Global
 		{EED7108C-E4A2-4E18-AB8C-7D2EF6497C1E}.Release|x64.Build.0 = Release|Any CPU
 		{EED7108C-E4A2-4E18-AB8C-7D2EF6497C1E}.Release|x86.ActiveCfg = Release|Any CPU
 		{EED7108C-E4A2-4E18-AB8C-7D2EF6497C1E}.Release|x86.Build.0 = Release|Any CPU
+		{38DC265F-079A-49F6-BEAB-1FCE92AE8487}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38DC265F-079A-49F6-BEAB-1FCE92AE8487}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38DC265F-079A-49F6-BEAB-1FCE92AE8487}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{38DC265F-079A-49F6-BEAB-1FCE92AE8487}.Debug|x64.Build.0 = Debug|Any CPU
+		{38DC265F-079A-49F6-BEAB-1FCE92AE8487}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{38DC265F-079A-49F6-BEAB-1FCE92AE8487}.Debug|x86.Build.0 = Debug|Any CPU
+		{38DC265F-079A-49F6-BEAB-1FCE92AE8487}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38DC265F-079A-49F6-BEAB-1FCE92AE8487}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38DC265F-079A-49F6-BEAB-1FCE92AE8487}.Release|x64.ActiveCfg = Release|Any CPU
+		{38DC265F-079A-49F6-BEAB-1FCE92AE8487}.Release|x64.Build.0 = Release|Any CPU
+		{38DC265F-079A-49F6-BEAB-1FCE92AE8487}.Release|x86.ActiveCfg = Release|Any CPU
+		{38DC265F-079A-49F6-BEAB-1FCE92AE8487}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
