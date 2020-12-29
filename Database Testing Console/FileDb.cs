@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Text;
+using System;
 
 namespace Database_Testing_Console
 {
@@ -40,13 +41,20 @@ namespace Database_Testing_Console
             var length = entry.Length;
             //var endOfFile = File.
 
-            using (FileStream fs = File.OpenWrite(dataFileName))
-            {
-                byte[] info = new UTF8Encoding(true).GetBytes(value);
-                await fs.WriteAsync(info, 0, length, new System.Threading.CancellationToken());
+            //TODO: get this value from storage somewhere instead of checking the file. (the last offset?)
+            var fileLength = new FileInfo(dataFileName).Length;
+            var offset = new FileOffset(key, fileLength, length);
+            
+            await File.AppendAllTextAsync(dataFileName, value);
+            await File.AppendAllTextAsync(offsetFileName, JsonSerializer.Serialize(offset) + Environment.NewLine);
 
-                fs.Close();
-            }
+            // using (FileStream fs = File.OpenWrite(dataFileName))
+            // {
+            //     byte[] info = new UTF8Encoding(true).GetBytes(value);
+            //     await fs.WriteAsync(info, 0, length, new System.Threading.CancellationToken());
+
+            //     fs.Close();
+            // }
 
             return true;
         }
@@ -58,7 +66,22 @@ namespace Database_Testing_Console
 
             await ReadOffsetFileAync(offsetFileName);
 
-            throw new System.NotImplementedException();
+            if (!Offsets.ContainsKey(key)) return "";
+
+            var offset = Offsets[key];
+            var result = new byte[offset.Length];
+            using (FileStream fs = File.OpenRead(dataFileName))
+            {
+                
+                fs.Seek(offset.StartOffset, SeekOrigin.Begin);
+                await fs.ReadAsync(result, 0, offset.Length);
+
+                fs.Close();
+            }
+            
+            var str = System.Text.Encoding.Default.GetString(result);
+
+            return str;
         }
 
         private string GetDataFileName(string collection, string key) => FilePath + DataFilePrefix + collection.ToLower() + ".json";
@@ -76,7 +99,7 @@ namespace Database_Testing_Console
 
             foreach (var offset in offsetArray)
             {
-                Offsets.AddOrUpdate(offset.Key, offset);
+                Offsets.AddOrUpdate(offset.Key, offset, (key, value) => offset);
             }
         }
     }
@@ -95,15 +118,15 @@ namespace Database_Testing_Console
 
     public class FileOffset
     {
-        public FileOffset(string key, long startOffset, long endOffset)
+        public FileOffset(string key, long startOffset, int length)
         {
             Key = key;
             StartOffset = startOffset;
-            EndOffset = endOffset;
+            Length = length;
         }
 
         public string Key { get; }
         public long StartOffset { get; }
-        public long EndOffset { get; }
+        public int Length { get; }
     }
 }
