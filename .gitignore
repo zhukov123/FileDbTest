@@ -53,3 +53,8 @@ StorageEngine/obj/Debug/net5.0/StorageEngine.dll
 StorageEngine/obj/Debug/net5.0/StorageEngine.GeneratedMSBuildEditorConfig.editorconfig
 StorageEngine/obj/Debug/net5.0/StorageEngine.pdb
 StorageEngine/obj/Debug/net5.0/ref/StorageEngine.dll
+Database Testing Console/Data_movie.json
+Database Testing Console/Data_testcollection.json
+Database Testing Console/movies_test.json
+Database Testing Console/Offset_movie.json
+Database Testing Console/Offset_testcollection.json
