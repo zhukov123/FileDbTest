@@ -9,7 +9,6 @@ namespace StorageEngine
             Length = length;
         }
 
-
         public string Key { get; set; }
         public long StartOffset { get; set; }
         public int Length { get; set; }

@@ -22,19 +22,18 @@ namespace Database_Testing_Console
                 movie.Id = Guid.NewGuid();
             }
 
-
             var sw = new Stopwatch();
             
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < 1; i++)
             {
                 sw.Start();
                 
-                for (var j = 0; j< dataElements.Length; j += 10)
+                for (var j = 0; j< dataElements.Length; j += 1)
                 {
-                    var elements = dataElements.Skip(j).Take(10).ToArray();
+                    var elements = dataElements.Skip(j).Take(1).ToArray();
                     var values = elements.Select(x => JsonSerializer.Serialize(x)).ToArray();
                     var keys = elements.Select(x => x.Id.ToString()).ToArray();
-                    _ = fileDb.AddOrUpdateBatchAsync(keys, values).Result;
+                    _ = fileDb.AddOrUpdateAsync(keys, values).Result;
                 }
 
                 Console.WriteLine($"Time ms: {sw.Elapsed.TotalMilliseconds}");
@@ -61,7 +60,8 @@ namespace Database_Testing_Console
 
             // var value4 = fileDb.GetAsync("hello").Result;
 
-            // Console.WriteLine("Hello World!");
+            Console.WriteLine("Please press enter!");
+            System.Threading.Thread.Sleep(100000);
         }
     }
 

@@ -6,14 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace StorageEngine
 {
     public interface IFileDbCollection
     {
         Task<string> GetAsync(string key);
-        Task<bool> AddOrUpdateAsync(string key, string value);
-        Task<bool> AddOrUpdateBatchAsync(string[] keys, string[] values);
+        Task<bool> AddOrUpdateAsync(string[] keys, string[] values);
+        Task<bool> AddOrUpdateWriteThroughAsync(string key, string value);
+        Task<bool> AddOrUpdateWriteThroughBatchAsync(string[] keys, string[] values);
         Task<bool> RemoveAsync(string key);
     }
 
@@ -29,12 +31,24 @@ namespace StorageEngine
 
         private ConcurrentDictionary<string, FileOffset> Offsets;
         private Dictionary<string, long> FilePointers;
+        private ConcurrentQueue<Entry> WriteBuffer;
 
         public FileDbCollection(string collectionName)
         {
             CollectionName = collectionName;
             Offsets = new ConcurrentDictionary<string, FileOffset>();
             FilePointers = new Dictionary<string, long>();
+            WriteBuffer = new ConcurrentQueue<Entry>();
+
+            var timer = new Timer(1000);
+            timer.Elapsed += async (x, y) =>
+            {
+                timer.Stop();
+                await ProcessWriteQueueAsync();
+                timer.Start();
+            };
+
+            timer.Start();
 
             OffsetFileName = GetOffsetFileName(CollectionName);
             DataFileName = GetDataFileName(CollectionName);
@@ -42,7 +56,24 @@ namespace StorageEngine
             ReadOffsetFileAync(OffsetFileName).GetAwaiter().GetResult();
         }
 
-        public async Task<bool> AddOrUpdateAsync(string key, string value)
+        public async Task<bool> AddOrUpdateAsync(string[] keys, string[] values)
+        {
+            if (keys.Length != values.Length) throw new ArgumentException("Keys and values must have the same number of elements");
+
+            if (keys.Length == 0) return false;
+
+            for (var i = 0; i < keys.Length; i++)
+            {
+                WriteBuffer.Enqueue(new Entry {
+                    Key = keys[i],
+                    Value = values[i]
+                });
+            }
+
+            return await Task.FromResult(true);
+        }
+
+        public async Task<bool> AddOrUpdateWriteThroughAsync(string key, string value)
         {
             var entry = value + Environment.NewLine;//JsonSerializer.Serialize(new Entry(key, value));
             var length = entry.Length;
@@ -58,24 +89,26 @@ namespace StorageEngine
             return true;
         }
 
-        public async Task<bool> AddOrUpdateBatchAsync(string[] keys, string[] values)
+        public async Task<bool> AddOrUpdateWriteThroughBatchAsync(string[] keys, string[] values)
         {
             if (keys.Length != values.Length) throw new ArgumentException("Keys and values must have the same number of elements");
+
+            if (keys.Length == 0) return false;
 
             var fileLength = await GetFilePointerAsync();
             long totalLength = 0;
             var offsetBuilder = new StringBuilder();
             var dataBuilder = new StringBuilder();
-            
+
             for (var i = 0; i < keys.Length; i++)
             {
                 var entry = values[i] + Environment.NewLine;//JsonSerializer.Serialize(new Entry(key, value));
                 var length = entry.Length;
                 var key = keys[i];
-            
+
                 var offset = new FileOffset(key, fileLength + totalLength, length);
                 Offsets[key] = offset;
-                
+
                 offsetBuilder.Append(JsonSerializer.Serialize(offset) + Environment.NewLine);
                 dataBuilder.Append(entry);
                 totalLength += length;
@@ -120,6 +153,43 @@ namespace StorageEngine
             var str = System.Text.Encoding.Default.GetString(result);
 
             return str.TrimEnd();
+        }
+
+
+        private async Task ProcessWriteQueueAsync()
+        {
+            var entries = new List<Entry>();
+
+            while (WriteBuffer.TryDequeue(out var entry))
+            {
+                entries.Add(entry);
+
+                if (entries.Count >= 10)
+                {
+                    await ProcessEntries(entries);
+
+                    Console.WriteLine($"Write buffer writing {entries.Count} entries");
+
+                    entries.Clear();
+                }
+            }
+
+            if (entries.Count > 1)
+            {
+                Console.WriteLine($"Write buffer writing {entries.Count} entries");
+            }
+
+            await ProcessEntries(entries);
+        }
+
+        private Task ProcessEntries(IEnumerable<Entry> entries)
+        {
+            var entriesArr = entries.ToArray();
+
+            var keys = entriesArr.Select(x => x.Key).ToArray();
+            var values = entriesArr.Select(x => x.Value).ToArray();
+
+            return AddOrUpdateWriteThroughBatchAsync(keys, values);
         }
 
         private async Task<long> GetFilePointerAsync()
