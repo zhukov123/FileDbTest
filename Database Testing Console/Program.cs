@@ -11,7 +11,7 @@ namespace Database_Testing_Console
     {
         static void Main(string[] args)
         {
-            var fileDb = new FileDbCollection("Movie");
+            var fileDb = new FileDb();
 
             //var value = fileDb.GetAsync("d8b537b3-358e-4686-ad83-7607324ab2a1").Result;
 
@@ -24,7 +24,7 @@ namespace Database_Testing_Console
 
             var sw = new Stopwatch();
             
-            for (var i = 0; i < 1; i++)
+            for (var i = 0; i < 10; i++)
             {
                 sw.Start();
                 
@@ -33,7 +33,7 @@ namespace Database_Testing_Console
                     var elements = dataElements.Skip(j).Take(1).ToArray();
                     var values = elements.Select(x => JsonSerializer.Serialize(x)).ToArray();
                     var keys = elements.Select(x => x.Id.ToString()).ToArray();
-                    _ = fileDb.AddOrUpdateAsync(keys, values).Result;
+                    _ = fileDb.AddOrUpdateAsync("Movies", keys, values).Result;
                 }
 
                 Console.WriteLine($"Time ms: {sw.Elapsed.TotalMilliseconds}");

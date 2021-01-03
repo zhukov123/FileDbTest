@@ -21,6 +21,9 @@ namespace StorageEngine
 
     public class FileDbCollection : IFileDbCollection
     {
+        private const int WRITE_BUFFER_WAIT_MS = 1000;
+        private const int WRITE_BUFFER_BATCH_SIZE = 100;
+
         private readonly string FilePath = "./";
         private readonly string DataFilePrefix = "Data_";
         private readonly string OffsetFilePrefix = "Offset_";
@@ -40,7 +43,7 @@ namespace StorageEngine
             FilePointers = new Dictionary<string, long>();
             WriteBuffer = new ConcurrentQueue<Entry>();
 
-            var timer = new Timer(1000);
+            var timer = new Timer(WRITE_BUFFER_WAIT_MS);
             timer.Elapsed += async (x, y) =>
             {
                 timer.Stop();
@@ -164,7 +167,7 @@ namespace StorageEngine
             {
                 entries.Add(entry);
 
-                if (entries.Count >= 10)
+                if (entries.Count >= WRITE_BUFFER_BATCH_SIZE)
                 {
                     await ProcessEntries(entries);
 
