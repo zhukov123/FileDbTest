@@ -103,3 +103,6 @@ StorageEngineWeb/obj/Debug/net5.0/StorageEngineWeb.RazorTargetAssemblyInfo.cache
 StorageEngineWeb/obj/Debug/net5.0/ref/StorageEngineWeb.dll
 StorageEngineWeb/obj/Debug/net5.0/staticwebassets/StorageEngineWeb.StaticWebAssets.Manifest.cache
 StorageEngineWeb/obj/Debug/net5.0/staticwebassets/StorageEngineWeb.StaticWebAssets.xml
+StorageEngineWeb/Offset_movies.json
+StorageEngineWeb/Data_movies.json
+StorageEngineWeb/obj/Debug/net5.0/project.razor.json

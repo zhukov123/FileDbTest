@@ -1,23 +1,40 @@
-// using System;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using StorageEngine;
 
-// namespace StorageEngineWeb.Controllers
-// {
+namespace StorageEngineWeb.Controllers
+{
 
-//     [ApiController]
-//     [Route("api")]
-//     public class FileDbController : ControllerBase
-//     {
-//         [HttpGet]
-//         public async IEnumerable<WeatherForecast> Get(string collection, string key)
-//         {
-//             var rng = new Random();
-//             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-//             {
-//                 Date = DateTime.Now.AddDays(index),
-//                 TemperatureC = rng.Next(-20, 55),
-//                 Summary = Summaries[rng.Next(Summaries.Length)]
-//             })
-//             .ToArray();
-//         }
-//     }
-// }
+    [ApiController]
+    [Route("db")]
+    public class FileDbController : ControllerBase
+    {
+        private IFileDb _fileDb;
+
+        public FileDbController(IFileDb fileDb)
+        {
+            _fileDb = fileDb;
+        }
+
+        [HttpGet]
+        [Route("{collection}/{key}")]
+        public async Task<string> GetAsync(string collection, string key)
+        {
+            return await _fileDb.GetAsync(collection, key);
+        }
+
+        [HttpPost]
+        [Route("{collection}")]
+        public async Task<bool> PostAsync(string collection, DbEntry[] entry)
+        {
+            var keys = entry.Select(x => x.Key).ToArray();
+            var values = entry.Select(x => x.Value).ToArray();
+
+            return await _fileDb.AddOrUpdateAsync(collection, keys, values);
+        }
+    }
+}
