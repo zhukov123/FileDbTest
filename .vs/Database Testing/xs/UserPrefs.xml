@@ -1,0 +1,30 @@
+﻿<Properties StartupConfiguration="{EED7108C-E4A2-4E18-AB8C-7D2EF6497C1E}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="StorageEngine/IFileDbCollection.cs">
+    <Files>
+      <File FileName="StorageEngineWeb/Controllers/FileDbController.cs" Line="1" Column="1" />
+      <File FileName="StorageEngineWeb/Controllers/WeatherForecastController.cs" Line="1" Column="1" />
+      <File FileName="StorageEngine/IFileDbCollection.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Database Testing" expanded="True">
+            <Node name="StorageEngine" expanded="True">
+              <Node name="IFileDbCollection.cs" selected="True" />
+            </Node>
+            <Node name="StorageEngineWeb" expanded="True">
+              <Node name="Controllers" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Database_220Testing_220Console PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

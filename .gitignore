@@ -106,3 +106,5 @@ StorageEngineWeb/obj/Debug/net5.0/staticwebassets/StorageEngineWeb.StaticWebAsse
 StorageEngineWeb/Offset_movies.json
 StorageEngineWeb/Data_movies.json
 StorageEngineWeb/obj/Debug/net5.0/project.razor.json
+StorageEngineWeb/bin/Debug/net5.0/Data_movies.json
+StorageEngineWeb/bin/Debug/net5.0/Offset_movies.json

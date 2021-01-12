@@ -106,7 +106,8 @@ namespace StorageEngine
             for (var i = 0; i < keys.Length; i++)
             {
                 var entry = values[i] + Environment.NewLine;//JsonSerializer.Serialize(new Entry(key, value));
-                var length = entry.Length;
+                var entryBytes = System.Text.Encoding.UTF8.GetBytes(entry);
+                var length = entryBytes.Length;
                 var key = keys[i];
 
                 var offset = new FileOffset(key, fileLength + totalLength, length);
@@ -153,7 +154,7 @@ namespace StorageEngine
                 fs.Close();
             }
 
-            var str = System.Text.Encoding.Default.GetString(result);
+            var str = System.Text.Encoding.UTF8.GetString(result);
 
             return str.TrimEnd();
         }
