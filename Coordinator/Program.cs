@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace StorageEngineWeb
+namespace Coordinator
 {
     public class Program
     {
@@ -21,8 +21,6 @@ namespace StorageEngineWeb
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                })
-                //.UseUrls("http://192.168.0.43:5000")
-                ;
+                });
     }
 }

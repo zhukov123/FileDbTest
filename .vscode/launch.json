@@ -5,6 +5,7 @@
     "version": "0.2.0",
     "configurations": [
 
+
         {
             "name": ".NET Core Launch (console)",
             "type": "coreclr",
@@ -16,13 +17,32 @@
             "console": "internalConsole",
             "stopAtEntry": false
         },{
-            "name": ".NET Core Launch (web)",
+            "name": "StorageEngineWeb (web)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/StorageEngineWeb/bin/Debug/net5.0/StorageEngineWeb.dll",
             "args": [],
             "cwd": "${workspaceFolder}/StorageEngineWeb",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },{
+            "name": "CoordinatorWeb (web)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/Coordinator/bin/Debug/net5.0/Coordinator.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Coordinator",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
