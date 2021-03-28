@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using System.Net.Http;
+using System.Collections.Generic;
 
 namespace Coordinator
 {
@@ -17,6 +18,8 @@ namespace Coordinator
 
     public class DbCoordinator : IDbCoordinator
     {
+        private static readonly Dictionary<string, IReplica> Replicas = new Dictionary<string, IReplica>();
+
         public Task<bool> AddOrUpdateAsync(string collection, string[] keys, string[] values)
         {
             throw new NotImplementedException();
@@ -24,7 +27,12 @@ namespace Coordinator
 
         public void EnrollReplica(string host)
         {
-            throw new NotImplementedException();
+            Replicas[host] = new Replica();
+        }
+        
+        public void RemoveReplica(string host)
+        {
+            Replicas.Remove(host);
         }
 
         public string GetAsync(string key)
@@ -38,11 +46,6 @@ namespace Coordinator
         }
 
         public Task<bool> RemoveAsync(string collection, string key)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveReplica(string host)
         {
             throw new NotImplementedException();
         }

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StorageEngineWeb", "Storage
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coordinator", "Coordinator\Coordinator.csproj", "{E1695A24-A9CC-4AA2-AB06-F911027A35E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileDb.Core", "FileDb.Core\FileDb.Core.csproj", "{1330DF1D-0106-4937-81DB-080B92C5E6DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,5 +74,17 @@ Global
 		{E1695A24-A9CC-4AA2-AB06-F911027A35E1}.Release|x64.Build.0 = Release|Any CPU
 		{E1695A24-A9CC-4AA2-AB06-F911027A35E1}.Release|x86.ActiveCfg = Release|Any CPU
 		{E1695A24-A9CC-4AA2-AB06-F911027A35E1}.Release|x86.Build.0 = Release|Any CPU
+		{1330DF1D-0106-4937-81DB-080B92C5E6DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1330DF1D-0106-4937-81DB-080B92C5E6DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1330DF1D-0106-4937-81DB-080B92C5E6DE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1330DF1D-0106-4937-81DB-080B92C5E6DE}.Debug|x64.Build.0 = Debug|Any CPU
+		{1330DF1D-0106-4937-81DB-080B92C5E6DE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1330DF1D-0106-4937-81DB-080B92C5E6DE}.Debug|x86.Build.0 = Debug|Any CPU
+		{1330DF1D-0106-4937-81DB-080B92C5E6DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1330DF1D-0106-4937-81DB-080B92C5E6DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1330DF1D-0106-4937-81DB-080B92C5E6DE}.Release|x64.ActiveCfg = Release|Any CPU
+		{1330DF1D-0106-4937-81DB-080B92C5E6DE}.Release|x64.Build.0 = Release|Any CPU
+		{1330DF1D-0106-4937-81DB-080B92C5E6DE}.Release|x86.ActiveCfg = Release|Any CPU
+		{1330DF1D-0106-4937-81DB-080B92C5E6DE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

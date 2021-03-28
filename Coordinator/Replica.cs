@@ -15,7 +15,9 @@ namespace Coordinator
         public string Host { get; set; }
         public async Task<bool> AddOrUpdateAsync(string collection, string[] keys, string[] values)
         {
-            return true;
+            var uri = $"http://{Host}/db/{collection}";
+
+            
         }
 
         public async Task<string> GetAsync(string collection, string key)
